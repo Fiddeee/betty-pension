@@ -9,12 +9,44 @@ Enum foodType - Fodertype - Skal hentes fra tblFoodType
 import java.time.LocalTime;
 
 
-import static java.rmi.Naming.bind;
 
 public class Meal {
     int weightInGrams = 0; //Weight in grams of food
     static String clock = "";
     int foderTypeID;
+
+
+
+        /**
+         * Udskriver alle ophold fra databasen.
+         */
+        public static void getFoodTypes() {
+            dbConnector.getJdbi().useHandle(handle -> {
+                var foodTypes = handle.createQuery("""
+                SELECT fldFoodTypeID, fldFoodTypeName
+                FROM tblFoodType
+                ORDER BY fldFoodTypeID
+                """)
+                        .mapToMap()
+                        .list();
+
+                if (foodTypes.isEmpty()) {
+                    System.out.println("Der er ingen fodertyper.");
+                    return;
+                }
+
+                System.out.printf("%-8s %-30s%n", "ID", "Fodertype");
+                System.out.println("----------------------------------------");
+
+                for (var foodType : foodTypes) {
+                    System.out.printf(
+                            "%-8s %-30s%n",
+                            foodType.get("fldFoodTypeID"),
+                            foodType.get("fldFoodTypeName")
+                    );
+                }
+            });
+        }
 
 
     /**
