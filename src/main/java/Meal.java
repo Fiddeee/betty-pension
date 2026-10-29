@@ -1,4 +1,4 @@
-/* TODO
+/** TODO
 Opret måltid og send til Database.
 
 int weight - Foderets vægt
@@ -6,9 +6,8 @@ int weight - Foderets vægt
 Enum foodType - Fodertype - Skal hentes fra tblFoodType
 
  */
+import java.time.LocalTime;
 
-import java.sql.Time;
-import java.sql.Timestamp;
 
 import static java.rmi.Naming.bind;
 
@@ -18,38 +17,29 @@ public class Meal {
     int foderTypeID;
 
 
-    
-    public static Object Timestamp(String hour, String minute) {
-        clock = hour + ":" + minute;
-        System.out.println(clock);
-        return clock;
-    }
-
-
-
     /**
      * Gemmer et måltid på et eksisterende ophold.
      */
-    public static void createMeal(int opholdId, int fodertypeId, String clock, int weightInGrams) {
+    public static void createMeal(
+            int opholdId, int fodertypeId,
+            String clock, int weightInGrams) {
+
+        LocalTime tidspunkt = LocalTime.parse(clock); //Formateres via ex. 12:30
 
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
-                INSERT INTO maaltid
-                    (opholdId, fodertypeId, tidspunkt, maengde)
-                VALUES
-                    (:opholdId, :fodertypeId, :clock, :weight)
-                """)
+                            INSERT INTO maaltid
+                                (opholdId, fodertypeId, tidspunkt, maengde)
+                            VALUES
+                                (:opholdId, :fodertypeId, :clock, :weight)
+                            """)
                     .bind("opholdId", opholdId)
                     .bind("fodertypeId", fodertypeId)
-                    .bind("clock", clock)
+                    .bind("clock", tidspunkt)
                     .bind("weight", weightInGrams)
                     .execute();
         });
-        System.out.println("Måltidet er nu oprettet.");
-        System.out.println("Ophold ID:" + opholdId);
-        System.out.println("Fodertype ID:" + fodertypeId);
-        System.out.println("Clock:" + clock);
-        System.out.println("Weight (In grams):" + weightInGrams);
-    }
 
+        System.out.println("Måltidet er nu oprettet kl. " + tidspunkt);
+    }
 }

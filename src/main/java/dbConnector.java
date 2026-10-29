@@ -17,7 +17,7 @@ public class dbConnector {
     /**
      * Returnerer projektets fælles Jdbi-objekt.
      *
-     * @return Jdbi-objektet til databaseoperationer
+     *
      */
     public static Jdbi getJdbi() {
         return jdbi;
