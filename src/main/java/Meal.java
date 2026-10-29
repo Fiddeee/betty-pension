@@ -7,7 +7,8 @@ Enum foodType - Fodertype - Skal hentes fra tblFoodType
 
  */
 import java.time.LocalTime;
-
+import java.util.List;
+import java.util.Map;
 
 
 public class Meal {
@@ -22,7 +23,7 @@ public class Meal {
          */
         public static void getFoodTypes() {
             dbConnector.getJdbi().useHandle(handle -> {
-                var foodTypes = handle.createQuery("""
+                List<Map<String, Object>> foodTypes = handle.createQuery("""
                 SELECT fldFoodTypeID, fldFoodTypeName
                 FROM tblFoodType
                 ORDER BY fldFoodTypeID
