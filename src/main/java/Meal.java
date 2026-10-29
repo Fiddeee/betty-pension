@@ -7,7 +7,8 @@ Enum foodType - Fodertype - Skal hentes fra tblFoodType
 
  */
 import java.time.LocalTime;
-
+import java.util.List;
+import java.util.Map;
 
 
 public class Meal {
@@ -22,10 +23,10 @@ public class Meal {
          */
         public static void getFoodTypes() {
             dbConnector.getJdbi().useHandle(handle -> {
-                var foodTypes = handle.createQuery("""
-                SELECT fldFoodTypeID, fldFoodTypeName
-                FROM tblFoodType
-                ORDER BY fldFoodTypeID
+                List<Map<String, Object>> foodTypes = handle.createQuery("""
+                SELECT fldFoodtypeID, fldFoodtypeNavn
+                FROM tblFoodtype
+                ORDER BY fldFoodtypeID
                 """)
                         .mapToMap()
                         .list();
@@ -35,14 +36,14 @@ public class Meal {
                     return;
                 }
 
-                System.out.printf("%-8s %-30s%n", "ID", "Fodertype");
+                System.out.printf("%-8s %-30s%n", "ID", "Foodtypes");
                 System.out.println("----------------------------------------");
 
                 for (var foodType : foodTypes) {
                     System.out.printf(
                             "%-8s %-30s%n",
-                            foodType.get("fldFoodTypeID"),
-                            foodType.get("fldFoodTypeName")
+                            foodType.get("fldfoodtypeid"),
+                            foodType.get("fldfoodtypenavn")
                     );
                 }
             });
@@ -60,15 +61,15 @@ public class Meal {
 
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
-                            INSERT INTO maaltid
-                                (opholdId, fodertypeId, tidspunkt, maengde)
+                            INSERT INTO tblMaaltid
+                                (fldOpholdID, fldFodertypeID, fldMaengde, fldTidspunkt)
                             VALUES
-                                (:opholdId, :fodertypeId, :clock, :weight)
+                                (:fldOpholdID, :fldFodertypeID, :fldMaengde, :fldTidspunkt)
                             """)
-                    .bind("opholdId", opholdId)
-                    .bind("fodertypeId", fodertypeId)
-                    .bind("clock", tidspunkt)
-                    .bind("weight", weightInGrams)
+                    .bind("fldOpholdID", opholdId)
+                    .bind("fldFodertypeID", fodertypeId)
+                    .bind("fldMaengde", weightInGrams)
+                    .bind("fldTidspunkt", tidspunkt)
                     .execute();
         });
 

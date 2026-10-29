@@ -11,23 +11,26 @@ import java.time.LocalTime;
 
 public class Walk {
     double Distance; // Distance walked in km
-    String timeUsed; //Used for time
+    String stringVarighed; //Used for time
+    String stringTidspunkt;
 
 
 
-    public void createWalk(int opholdID, double Distance, String timeUsed){
-        LocalTime walkTime = LocalTime.parse(timeUsed);
+    public void createWalk(int opholdID, double Distance, String stringVarighed, String stringTidspunkt){
+        LocalTime Varighed = LocalTime.parse(stringVarighed);
+        LocalTime Tidspunkt = LocalTime.parse(stringTidspunkt);
 
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
-                            INSERT INTO walk
-                                (opholdId, Distance, timeUsed)
+                            INSERT INTO tblGaatur
+                                (fldOpholdID, fldDistance, fldVarighed, fldTidspunkt)
                             VALUES
-                                (:opholdId, :Distance, :timeUsed)
+                                (:fldOpholdID, :fldDistance, :fldVarighed, :fldTidspunkt)
                             """)
-                    .bind("opholdId", opholdID)
-                    .bind("Distance", Distance)
-                    .bind("timeUsed", timeUsed)
+                    .bind("fldOpholdID", opholdID)
+                    .bind("fldDistance", Distance)
+                    .bind("fldVarighed", Varighed)
+                    .bind("fldTidspunkt", Tidspunkt)
                     .execute();
         });
 

@@ -7,7 +7,7 @@ public class dbConnector {
 
     private static final Jdbi jdbi = Jdbi.create(
             "jdbc:sqlserver://localhost:1433;" +
-                    "databaseName=dbAdgangTilDatabase;" + // Ret databaseName til det navn du har givet databasen I SQL Server
+                    "databaseName=dbBetty;" + // Ret databaseName til det navn du har givet databasen I SQL Server
                     "encrypt=true;" +
                     "trustServerCertificate=true",
             "frede_java", //Brugernavn  vi opretter I SQL
