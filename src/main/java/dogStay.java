@@ -6,20 +6,17 @@
 
  */
 
-import java.util.List;
-import java.util.Map;
-
 public class dogStay {
     /**
      * Udskriver alle ophold fra databasen.
      */
     public static void printAllStays() {
         dbConnector.getJdbi().useHandle(handle -> {
-            List<Map<String, Object>> stays = handle.createQuery(""" 
-                SELECT fldOpholdID, fldHundID, fldAnkomstDato,
-                       fldForventetAfrejse, fldFaktiskAfrejse
+            var stays = handle.createQuery("""
+                SELECT FLDOpholdID, FLDHundID, FLDAnkomstDato,
+                       FLDForventningAfrejse, FLDFaktiskAfrejse
                 FROM tblOphold
-                ORDER BY fldOpholdID
+                ORDER BY FLDOpholdID
                 """)
                     .mapToMap()
                     .list();
