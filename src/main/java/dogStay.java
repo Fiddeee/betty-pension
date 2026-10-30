@@ -13,10 +13,10 @@ public class dogStay {
     public static void printAllStays() {
         dbConnector.getJdbi().useHandle(handle -> {
             var stays = handle.createQuery("""
-                SELECT FLDOpholdID, FLDHundID, FLDAnkomstDato,
-                       FLDForventningAfrejse, FLDFaktiskAfrejse
+                SELECT fldOpholdID, fldHundID, fldAnkomstDato,
+                       fldForventetAfrejse, fldFaktiskAfrejse
                 FROM tblOphold
-                ORDER BY FLDOpholdID
+                ORDER BY fldOpholdID
                 """)
                     .mapToMap()
                     .list();
@@ -26,8 +26,17 @@ public class dogStay {
                 return;
             }
 
+            System.out.printf("%-8s %-30s %-30s %-30s %-30s%n", "OpholdID", "HundID", "Ankomstdato", "Forventet afrejse", "Faktisk afrejse");
+            System.out.println("----------------------------------------");
             for (var stay : stays) {
-                System.out.println(stay);
+                System.out.printf(
+                        "%-8s %-30s %-30s %-30s %-30s%n",
+                        stay.get("fldopholdid"),
+                        stay.get("fldhundid"),
+                        stay.get("fldankomstdato"),
+                        stay.get("fldforventetafrejse"),
+                        stay.get("fldfaktiskafrejse")
+                );
             }
         });
     }
