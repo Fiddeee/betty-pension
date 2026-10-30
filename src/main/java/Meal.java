@@ -23,9 +23,9 @@ public class Meal {
         public static void getFoodTypes() {
             dbConnector.getJdbi().useHandle(handle -> {
                 var foodTypes = handle.createQuery("""
-                SELECT fldFoodTypeID, fldFoodTypeName
+                SELECT fldFoodtypeID, fldFoodtypeNavn
                 FROM tblFoodType
-                ORDER BY fldFoodTypeID
+                ORDER BY fldFoodtypeID
                 """)
                         .mapToMap()
                         .list();
@@ -41,8 +41,8 @@ public class Meal {
                 for (var foodType : foodTypes) {
                     System.out.printf(
                             "%-8s %-30s%n",
-                            foodType.get("fldFoodTypeID"),
-                            foodType.get("fldFoodTypeName")
+                            foodType.get("fldfoodtypeid"),
+                            foodType.get("fldfoodtypenavn")
                     );
                 }
             });
