@@ -18,7 +18,7 @@ public class EventLog {
             var stays = handle.createQuery("""
                     SELECT fldOpholdID, fldHundID,
                            fldAnkomstDato,
-                           fldForventningAfrejse,
+                           fldForventetAfrejse,
                            fldFaktiskAfrejse
                     FROM tblOphold
                     WHERE fldOpholdID = :opholdID
@@ -38,13 +38,13 @@ public class EventLog {
 
              */
             var meals = handle.createQuery("""
-                    SELECT tblMaaltid.tidspunkt, tblMaaltid.maengde,
-                           tblMaaltid.fodertypeId, tblFoodType.fldFoodtypeNavn
+                    SELECT tblMaaltid.fldTidspunkt, tblMaaltid.fldMaengde,
+                           tblMaaltid.fldFodertypeID, tblFoodType.fldFoodtypeNavn
                     FROM tblMaaltid
                     LEFT JOIN tblFoodType
-                        ON tblMaaltid.fodertypeId = tblFoodType.fldFoodtypeID
-                    WHERE tblMaaltid.opholdId = :opholdID
-                    ORDER BY tblMaaltid.tidspunkt
+                        ON tblMaaltid.fldFodertypeID = tblFoodType.fldFoodtypeID
+                    WHERE tblMaaltid.fldOpholdID = :opholdID
+                    ORDER BY tblMaaltid.fldTidspunkt
                     """)
                     .bind("opholdID", opholdID)
                     .mapToMap()

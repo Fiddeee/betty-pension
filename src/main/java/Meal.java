@@ -62,7 +62,7 @@ public class Meal {
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
                             INSERT INTO tblMaaltid
-                                (opholdId, fodertypeId, tidspunkt, maengde)
+                                (fldOpholdID, fldFodertypeID, fldTidspunkt, fldMaengde)
                             VALUES
                                 (:opholdId, :fodertypeId, :clock, :weight)
                             """)
