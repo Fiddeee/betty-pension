@@ -1,13 +1,14 @@
-/* TODO
-Lav funktion til oprettelse af gåtur.
-
-Skal indeholde
-
-double Distance - Distancen der er gået
-? walkTime - Tiden det har taget at gå
+/**
+ * Tilhører tblGaatur
+ *
+ * Opretter gåturer
  */
 
-import java.time.LocalTime;
+import java.time.LocalDate; //Sætter dato for gåturen
+import java.time.LocalDateTime; //Samler LocalDate og LocalTime så det kan indsættes i 1 felt sammen.
+import java.time.LocalTime; //Indeholder tid
+import java.time.format.DateTimeFormatter; //Bruges til formattering, så vi kan fjerne dato fra Varigheden, så det indsættes korrekt i databasen.
+
 
 public class Walk {
     static int opholdID;
@@ -18,8 +19,11 @@ public class Walk {
 
 
     public static void createWalk(int opholdID, double Distance, String stringVarighed, String stringTidspunkt){
-        LocalTime Varighed = LocalTime.parse(stringVarighed);
-        LocalTime Tidspunkt = LocalTime.parse(stringTidspunkt);
+        String Varighed = LocalTime.parse(stringVarighed).format(DateTimeFormatter.ofPattern("HH:mm:ss"));
+
+
+        LocalDateTime Tidspunkt = LocalDate.now().atTime(LocalTime.parse(stringTidspunkt)); //Formateres via ex. 12:30
+
 
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""

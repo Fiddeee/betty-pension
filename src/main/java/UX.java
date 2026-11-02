@@ -1,5 +1,20 @@
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.Locale; //Bruges til at systemet kan tage højde for at modtage både "komma" og "punktum" i Kilometer
+import java.util.Scanner; //Bruges til at modtage user input
+
+/**
+ * Indeholder alt brugeren møder i konsollen.
+ *
+ * Filen indeholder metoder der kan bruges til at kontrollerer diverse input der modtages, istedet for
+ * at skulle lave en kontrol ved hvert input, er der oprettet forskellige metoder som kan genbruges
+ * -readInt
+ * -readStayId
+ * -foodTypeExists
+ * -readDistance
+ * -readTime
+ * -readAgain
+ *
+ *
+ */
 
 /** Viser menuer og kontrollerer brugerens input. */
 public class UX {

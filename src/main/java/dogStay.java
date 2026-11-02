@@ -1,11 +1,6 @@
-/* TODO
-- Lav funktion til at hente data fra tblOphold
-- Skal hentes som seperate enheder
-
-
-
+/**
+ * Behandler data fra tblOphold
  */
-
 public class dogStay {
     /**
      * Udskriver alle ophold fra databasen.

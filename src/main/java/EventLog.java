@@ -1,10 +1,11 @@
 /**
- * Udskriver et opholds oplysninger, måltider og gåture fra databasen.
+ * Udskriver et opholds oplysninger, måltider, gåturer - aka Hændelseslog
+ * Henter data fra: tblOphold, tblMaaltid, tblGaatur og tblFoodType
  */
 public class EventLog {
     public static int opholdID;
     /**
-     * Henter og udskriver hændelsesloggen for ét ophold i konsollen.
+     * Henter og udskriver hændelsesloggen for ét ophold.
      *
      */
     public static void print(int opholdID) {
@@ -74,7 +75,7 @@ public class EventLog {
                 System.out.println("Faktisk afrejse:" + stay.get("fldfaktiskafrejse"));
             }
 
-
+            System.out.println(" ");
             System.out.println("MÅLTIDER");
             if (meals.isEmpty()) {
                 System.out.println("Ingen måltider registreret.");
@@ -87,7 +88,7 @@ public class EventLog {
                             meal.get("maengde"));
                 }
             }
-
+            System.out.println(" ");
             System.out.println("GÅTURE");
             if (walks.isEmpty()) {
                 System.out.println("Ingen gåture registreret.");

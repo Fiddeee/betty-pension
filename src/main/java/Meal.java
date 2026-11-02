@@ -1,25 +1,26 @@
-/** TODO
-Opret måltid og send til Database.
-
-int weight - Foderets vægt
-? time - Tidspunkt for fodring
-Enum foodType - Fodertype - Skal hentes fra tblFoodType
-
+/**
+ * Tilhører tblMaaltid
+ *
+ * Kan hente fodertyper fra tblFoodtype
  */
-import java.time.LocalTime;
+
+import java.time.LocalTime; //Bruges til tidspunktsformattering
+import java.time.LocalDate; //Bruges til dagens dato
+import java.time.LocalDateTime; //Samler det, så databasen kan bruge det i et samlet felt, istedet for 2 felter, et til LocalTime, og et til LocalDate
+
 
 
 
 public class Meal {
-    static int weightInGrams = 0; //Weight in grams of food
-    static String clock = "";
-    static int foderTypeID;
+    static int weightInGrams = 0; //Fodervægt i gram
+    static String clock = ""; //Klokkeslæt
+    static int foderTypeID; //FodertypeID - tjekkes fra tblFoodtype
     static int opholdId;
 
 
 
         /**
-         * Udskriver alle ophold fra databasen.
+         * Udskriver alle fodertyper fra tblFoodType
          */
         public static void getFoodTypes() {
             dbConnector.getJdbi().useHandle(handle -> {
@@ -51,13 +52,13 @@ public class Meal {
 
 
     /**
-     * Gemmer et måltid på et eksisterende ophold.
+     * Opretter et måltid på et eksisterende ophold.
      */
     public static void createMeal(
             int opholdId, int fodertypeId,
             String clock, int weightInGrams) {
 
-        LocalTime tidspunkt = LocalTime.parse(clock); //Formateres via ex. 12:30
+        LocalDateTime tidspunkt = LocalDate.now().atTime(LocalTime.parse(clock)); //Formateres via ex. 12:30
 
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
