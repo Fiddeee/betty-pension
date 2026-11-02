@@ -11,9 +11,10 @@ import java.time.LocalTime;
 
 
 public class Meal {
-    int weightInGrams = 0; //Weight in grams of food
+    static int weightInGrams = 0; //Weight in grams of food
     static String clock = "";
-    int foderTypeID;
+    static int foderTypeID;
+    static int opholdId;
 
 
 
@@ -60,7 +61,7 @@ public class Meal {
 
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
-                            INSERT INTO maaltid
+                            INSERT INTO tblMaaltid
                                 (opholdId, fodertypeId, tidspunkt, maengde)
                             VALUES
                                 (:opholdId, :fodertypeId, :clock, :weight)

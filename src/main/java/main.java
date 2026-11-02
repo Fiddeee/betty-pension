@@ -1,7 +1,6 @@
 public class main {
     public static void main(String[] args) {
         Meal.getFoodTypes();
-        dogStay.printAllStays();
 
 
     }
