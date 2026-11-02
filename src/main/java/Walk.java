@@ -10,13 +10,14 @@ double Distance - Distancen der er gået
 import java.time.LocalTime;
 
 public class Walk {
-    double Distance; // Distance walked in km
-    String stringVarighed; //Used for time
-    String stringTidspunkt;
+    static int opholdID;
+    static double Distance; // Distance walked in km
+    static String stringVarighed; //Used for time
+    static String stringTidspunkt;
 
 
 
-    public void createWalk(int opholdID, double Distance, String stringVarighed, String stringTidspunkt){
+    public static void createWalk(int opholdID, double Distance, String stringVarighed, String stringTidspunkt){
         LocalTime Varighed = LocalTime.parse(stringVarighed);
         LocalTime Tidspunkt = LocalTime.parse(stringTidspunkt);
 
@@ -33,6 +34,13 @@ public class Walk {
                     .bind("fldTidspunkt", Tidspunkt)
                     .execute();
         });
-
+        System.out.println("===");
+        System.out.println("En gåtur er oprettet med følgende oplysninger");
+        System.out.println(" ");
+        System.out.println("Ophold ID : "+opholdID);
+        System.out.println("Distance : "+Distance);
+        System.out.println("Varighed : "+Varighed);
+        System.out.println("Tidspunkt : "+Tidspunkt);
+        System.out.println(" ");
     }
 }
