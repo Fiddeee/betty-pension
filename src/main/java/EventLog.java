@@ -67,7 +67,7 @@ public class EventLog {
             System.out.println("Ophold-ID: " + stay.get("fldopholdid"));
             System.out.println("Hund-ID: " + stay.get("fldhundid"));
             System.out.println("Ankomst: " + stay.get("fldankomstdato"));
-            System.out.println("Forventet afrejse: " + stay.get("fldforventningafrejse"));
+            System.out.println("Forventet afrejse: " + stay.get("fldforventetafrejse"));
             if(stay.get("fldfaktiskafrejse") == null){
                 System.out.println("Faktisk afrejse: Ikke bestemt endnu.");
             }
@@ -80,12 +80,12 @@ public class EventLog {
             if (meals.isEmpty()) {
                 System.out.println("Ingen måltider registreret.");
             } else {
-                System.out.printf("%-12s %-30s %s%n", "Tidspunkt", "Fodertype", "Mængde (gram)");
+                System.out.printf("%-30s %-30s %s%n", "Tidspunkt", "Fodertype", "Mængde (gram)");
                 for (var meal : meals) {
-                    System.out.printf("%-12s %-30s %s%n",
-                            meal.get("tidspunkt"),
-                            meal.get("fodertype"),
-                            meal.get("maengde"));
+                    System.out.printf("%-30s %-30s %s%n",
+                            meal.get("fldtidspunkt"),
+                            meal.get("fldfoodtypenavn"),
+                            meal.get("fldmaengde"));
                 }
             }
             System.out.println(" ");
@@ -93,9 +93,9 @@ public class EventLog {
             if (walks.isEmpty()) {
                 System.out.println("Ingen gåture registreret.");
             } else {
-                System.out.printf("%-12s %-16s %s%n", "Tidspunkt", "Distance (km)", "Varighed (tt:mm:ss)");
+                System.out.printf("%-30s %-16s %s%n", "Tidspunkt", "Distance (km)", "Varighed (tt:mm:ss)");
                 for (var walk : walks) {
-                    System.out.printf("%-12s %-16s %s%n",
+                    System.out.printf("%-30s %-16s %s%n",
                             walk.get("fldtidspunkt"), walk.get("flddistance"), walk.get("fldvarighed"));
                 }
             }

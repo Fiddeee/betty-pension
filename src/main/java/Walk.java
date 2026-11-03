@@ -17,13 +17,22 @@ public class Walk {
     static String stringTidspunkt;
 
 
-
+    /**
+     *
+     * @param opholdID
+     * @param Distance
+     * @param stringVarighed
+     * @param stringTidspunkt
+     *
+     * Opretter en gåtur i tblGaatur. Formaterer Tidspunkt i dd/MM/yyyy - HH:mm:ss Så det står i dansk formattering
+     * Varighed i HH:mm:ss
+     */
     public static void createWalk(int opholdID, double Distance, String stringVarighed, String stringTidspunkt){
         String Varighed = LocalTime.parse(stringVarighed).format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
 
         LocalDateTime Tidspunkt = LocalDate.now().atTime(LocalTime.parse(stringTidspunkt)); //Formateres via ex. 12:30
-
+        String formateretTid = Tidspunkt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
@@ -35,7 +44,7 @@ public class Walk {
                     .bind("fldOpholdID", opholdID)
                     .bind("fldDistance", Distance)
                     .bind("fldVarighed", Varighed)
-                    .bind("fldTidspunkt", Tidspunkt)
+                    .bind("fldTidspunkt", formateretTid)
                     .execute();
         });
         System.out.println("===");
@@ -44,7 +53,7 @@ public class Walk {
         System.out.println("Ophold ID : "+opholdID);
         System.out.println("Distance : "+Distance);
         System.out.println("Varighed : "+Varighed);
-        System.out.println("Tidspunkt : "+Tidspunkt);
+        System.out.println("Tidspunkt : "+formateretTid);
         System.out.println(" ");
     }
 }

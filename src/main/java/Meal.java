@@ -7,8 +7,7 @@
 import java.time.LocalTime; //Bruges til tidspunktsformattering
 import java.time.LocalDate; //Bruges til dagens dato
 import java.time.LocalDateTime; //Samler det, så databasen kan bruge det i et samlet felt, istedet for 2 felter, et til LocalTime, og et til LocalDate
-
-
+import java.time.format.DateTimeFormatter;
 
 
 public class Meal {
@@ -58,8 +57,8 @@ public class Meal {
             int opholdId, int fodertypeId,
             String clock, int weightInGrams) {
 
-        LocalDateTime tidspunkt = LocalDate.now().atTime(LocalTime.parse(clock)); //Formateres via ex. 12:30
-
+        LocalDateTime tidspunkt = LocalDate.now().atTime(LocalTime.parse(clock));
+        String formateretTidspunkt = tidspunkt.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
         dbConnector.getJdbi().useHandle(handle -> {
             handle.createUpdate("""
                             INSERT INTO tblMaaltid
@@ -69,7 +68,7 @@ public class Meal {
                             """)
                     .bind("opholdId", opholdId)
                     .bind("fodertypeId", fodertypeId)
-                    .bind("clock", tidspunkt)
+                    .bind("clock", formateretTidspunkt)
                     .bind("weight", weightInGrams)
                     .execute();
         });
